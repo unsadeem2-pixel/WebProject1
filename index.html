@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CyberRun - Interactive Cybersecurity</title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Press+Start+2P&display=swap"
+        rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" /> 
+</head>
+<body>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">CYBERRUN</h1>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="academy.html">Academy</a></li>
+                    <li><a href="games.html">Games</a></li>
+                    <li><a href="Tools.html">Tools</a></li>
+                </ul>
+            </nav>
+            <button class="login-button"><i class="fa-solid fa-user"></i></button>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Learn Cybersecurity Through Interactive Adventure</h2>
+                <p>Join the adventure to learn about cybersecurity through challenges, games, and interactive lessons.</p>
+                <button id="getStartedBtn" class="btn btn-primary">Get Started</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-cards-section" id="cardsSection">
+        <div class="container">
+            
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <h3>Cybersecurity Academy</h3>
+                <p>Learn cybersecurity concepts, types of threats, protection methods, and real-world case studies.</p>
+                <a href="academy.html" class="btn btn-primary btn-small">Start Learning</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-gamepad"></i></div>
+                <h3>Interactive Games</h3>
+                <p>Play educational games like data decryption, Web and Forensics challenges.</p>
+                <a href="games.html" class="btn btn-primary btn-small">Play Now</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-toolbox"></i></div>
+                <h3>Cyber Tools Hub</h3>
+                <p>Discover quick and powerful security tools - test your passwords, scan links, analyze files, and take on fun mini-challenges to boost your cyber skills.</p>
+                <a href="Tools.html" class="btn btn-primary btn-small">Access Tools</a>
+            </div>
+        </div>
+    </section>
+
+<section class="progress-section">
+        <div class="container">
+            <div class="certificate-content"> <div class="progress-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <div class="progress-text">
+                    <h3>View Your Certificate</h3>
+                    <p>After completing challenges, you can generate and print your CyberRun certificate.</p>
+                </div>
+                <a href="certificate.html" class="btn btn-primary certificate-btn">View Certificate</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 CyberRun. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const getStartedBtn = document.getElementById('getStartedBtn');
+            const cardsSection = document.getElementById('cardsSection');
+
+            if (getStartedBtn && cardsSection) {
+                getStartedBtn.addEventListener('click', function() {
+                    // تطبيق الانزلاق الناعم إلى قسم البطاقات
+                    cardsSection.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

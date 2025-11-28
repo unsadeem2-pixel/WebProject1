@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Tools</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Toolsstyle.css">
+</head>
+
+<body>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">CYBERRUN</h1>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="academy.html">Academy</a></li>
+                    <li><a href="#">Games</a></li>
+                    <li><a href="Tools.html" class="active-link">Tools</a></li>
+                </ul>
+            </nav>
+            <button class="login-button"><i class="fa-solid fa-user"></i></button>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Essential Cybersecurity Tools</h2>
+                <p>Quick, smart, and secure <br> your cybersecurity toolkit starts here , Explore simple tools built for fast checks.
+</p>
+                <a href="#tool-sections" class="btn btn-primary">Start Now</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-cards-section" id="tool-sections">
+        <div class="container tool-sections-container">
+
+            <div class="card tool-card">
+                <div class="card-icon"><i class="fa-solid fa-lock"></i></div>
+                <h3>1. Password Strength Checker</h3>
+                <input type="password" id="passwordInput" placeholder="Enter password...">
+                <button class="btn btn-primary tool-btn" onclick="checkPasswordStrength()">Check Strength</button>
+                <p id="passwordResult" class="tool-result">Result: Awaiting input...</p>
+            </div>
+
+            <div class="card tool-card">
+                <div class="card-icon"><i class="fa-solid fa-link"></i></div>
+                <h3>2. URL Analyzer</h3>
+                <input type="text" id="urlInput" placeholder="Enter URL...">
+                <button class="btn btn-primary tool-btn" onclick="analyzeUrl()">Analyze URL</button>
+                <p id="urlResult" class="tool-result">Result: Awaiting input...</p>
+            </div>
+
+            <div class="card tool-card">
+                <div class="card-icon"><i class="fa-solid fa-file-code"></i></div>
+                <h3>3. File Name Analyzer</h3>
+                <input type="text" id="fileNameInput" placeholder="Enter file name...">
+                <button class="btn btn-primary tool-btn" onclick="analyzeFileName()">Analyze Name</button>
+                <p id="fileNameResult" class="tool-result">Result: Awaiting input...</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="scenario-challenges-section">
+        <div class="container">
+            <h2 class="scenario-title">Cyber Scenario Challenges</h2>
+
+            <section id="scenario-1" class="tool-section scenario-grid-layout">
+                <div class="scenario-main-content">
+                    <h4>Scenario 1: Public Wi-Fi Security</h4>
+                    <div class="scenario-image-placeholder">
+                        <img src="VPN.png" alt="Public Wi-Fi Image">
+                    </div>
+                    <p>You’re at a café, connected to public Wi‑Fi, and need to safely open a sensitive work file.<br><br> Question:
+Which tool keeps your connection secure from eavesdroppers?</p>
+                    <div class="scenario-actions radio-choices">
+                        <label><input type="radio" name="scenario1-tool" value="vpn" onclick="checkScenario('scenario-1', 'vpn')"> VPN Service</label>
+                        <label><input type="radio" name="scenario1-tool" value="encryption" onclick="checkScenario('scenario-1', 'encryption')"> Disk Encryption</label>
+                        <label><input type="radio" name="scenario1-tool" value="cleaner" onclick="checkScenario('scenario-1', 'cleaner')"> System Cleaner</label>
+                    </div>
+                    <div class="result-display" id="scenario-1-result"></div>
+                </div>
+                <div class="scenario-hint-area">
+                    <p class="hint-text-placeholder">Need help? See a 'Hint' </p>
+                    <button class="hint-btn" onclick="showHint('scenario-1')">Hint</button>
+                    <div class="hint-display" id="scenario-1-hint-output"></div>
+                </div>
+            </section>
+
+            <section id="scenario-2" class="tool-section scenario-grid-layout">
+                <div class="scenario-main-content">
+                    <h4>Scenario 2: Protecting Your Main Login</h4>
+                    <div class="scenario-image-placeholder">
+                        <img src="AUT.png" alt="Login Shield Image">
+                    </div>
+                    <p>You want to add an extra layer of protection to your most important email account beyond just a strong password.<br> <br>Question:
+Which tool provides a constantly changing, time-sensitive code to block remote thieves?
+</p>
+                    <div class="scenario-actions radio-choices">
+                        <label><input type="radio" name="scenario2-tool" value="vpn" onclick="checkScenario('scenario-2', 'vpn')"> VPN Service</label>
+                        <label><input type="radio" name="scenario2-tool" value="authenticator" onclick="checkScenario('scenario-2', 'authenticator')"> Authenticator App (2FA)</label>
+                        <label><input type="radio" name="scenario2-tool" value="encryption" onclick="checkScenario('scenario-2', 'encryption')"> Disk Encryption</label>
+                    </div>
+                    <div class="result-display" id="scenario-2-result"></div>
+                </div>
+                <div class="scenario-hint-area">
+                    <p class="hint-text-placeholder">Need help? See a 'Hint'</p>
+                    <button class="hint-btn" onclick="showHint('scenario-2')">Hint</button>
+                    <div class="hint-display" id="scenario-2-hint-output"></div>
+                </div>
+            </section>
+
+            <section id="scenario-3" class="tool-section scenario-grid-layout">
+                <div class="scenario-main-content">
+                    <h4>Scenario 3: Cleaning System Traces</h4>
+                    <div class="scenario-image-placeholder">
+                        <img src="System.png" alt="System Cleanup Image">
+                    </div>
+                    <p>After successfully removing malware, you need to clean all temporary files, cache, and small registry entries to keep your system healthy.<br><br> Question:
+Which tool is best for clearing leftover traces from your system?</p>
+                    <div class="scenario-actions radio-choices">
+                        <label><input type="radio" name="scenario3-tool" value="authenticator" onclick="checkScenario('scenario-3', 'authenticator')"> Authenticator App (2FA)</label>
+                        <label><input type="radio" name="scenario3-tool" value="cleaner" onclick="checkScenario('scenario-3', 'cleaner')"> System Cleaner</label>
+                        <label><input type="radio" name="scenario3-tool" value="vpn" onclick="checkScenario('scenario-3', 'vpn')"> VPN Service</label>
+                    </div>
+                    <div class="result-display" id="scenario-3-result"></div>
+                </div>
+                <div class="scenario-hint-area">
+                    <p class="hint-text-placeholder">Need help? See a 'Hint'</p>
+                    <button class="hint-btn" onclick="showHint('scenario-3')">Hint</button>
+                    <div class="hint-display" id="scenario-3-hint-output"></div>
+                </div>
+            </section>
+
+        </div>
+    </section>
+
+    <div class="back-home-container">
+        <a href="index.html" onclick="navigateToHome(event)" class="back-home-btn">⬅ Back to Home</a>
+    </div>
+
+    <div id="toolModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle"></h3>
+            <p id="modalDefinition"></p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 CyberRun. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="Toolsfun.js"></script>
+
+</body>
+
+</html>

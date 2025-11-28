@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cyber Run - Certificate</title>
+
+<style>
+/* ====================================
+   1. Base Styling - دمج أنماط الموقع الأساسية
+   ==================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color-dark: #8a2be2; /* بنفسجي */
+    --primary-color-light: #d43f8d; /* وردي */
+    --dark-bg: #0d1117; /* خلفية داكنة */
+    --text-color: #e6edf3;
+    --light-text: #c9d1d9;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    background: 
+        radial-gradient(circle at top left, rgba(138, 43, 226, 0.4), transparent 50%),
+        radial-gradient(circle at bottom right, rgba(212, 63, 141, 0.4), transparent 50%),
+        var(--dark-bg);
+    background-attachment: fixed;
+    background-size: cover;
+    overflow-x: hidden;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+}
+
+/* طبقة شفافة لجعل النص أكثر بروزاً */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(13, 17, 23, 0.4);
+    z-index: 0;
+}
+
+.content-wrapper {
+    max-width: 850px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* العودة للصفحة الرئيسية */
+.back-link {
+    display: inline-block;
+    color: var(--primary-color-light);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1em;
+    margin-bottom: 30px;
+    transition: color 0.3s ease;
+}
+.back-link:hover {
+    color: var(--primary-color-dark);
+}
+
+/* ====================================
+   2. Title and Rating
+   ==================================== */
+#siteTitle {
+    font-family: 'Press Start 2P', system-ui;
+    font-size: 2.2em;
+    color: #fff;
+    text-shadow: 0 0 15px var(--primary-color-dark);
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+}
+
+h3 {
+    color: var(--light-text);
+    margin-bottom: 15px;
+}
+
+/* Rating Stars */
+.rating {
+    direction: rtl;
+    unicode-bidi: bidi-override;
+    margin: 20px 0 30px;
+}
+.rating input { display: none; }
+.rating label {
+    font-size: 50px;
+    color: #4a3469;
+    cursor: pointer;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+.rating input:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+    color: var(--primary-color-light);
+    text-shadow: 0 0 15px var(--primary-color-light);
+}
+
+/* ====================================
+   3. Input and Button - تحسين المدخل والزر
+   ==================================== */
+#nameInput {
+    width: 80%;
+    max-width: 450px;
+    padding: 15px 20px;
+    margin-top: 15px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    border: 2px solid var(--primary-color-dark);
+    background: rgba(22, 27, 34, 0.9);
+    color: var(--text-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    display: none; /* مخفي افتراضياً */
+}
+
+#nameInput:focus {
+    outline: none;
+    border-color: var(--primary-color-light);
+    box-shadow: 0 0 15px rgba(212, 63, 141, 0.5);
+}
+
+/* الزر الأساسي (Primary Button Style) */
+.btn-primary {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 35px;
+    border-radius: 50px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    font-size: 1.1em;
+    background: linear-gradient(90deg, var(--primary-color-light), var(--primary-color-dark));
+    color: white;
+    box-shadow: 0 0 20px rgba(212, 63, 141, 0.4);
+    display: none; /* مخفي افتراضياً */
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 30px rgba(212, 63, 141, 0.8);
+}
+
+/* تطبيق الأنماط على زر الطباعة */
+#printBtn {
+    /* يستخدم نمط .btn-primary */
+}
+
+/* ====================================
+   4. Certificate - تحسين عرض الشهادة
+   ==================================== */
+#certificate {
+    margin: 60px auto 40px;
+    width: 90%;
+    max-width: 700px;
+    padding: 50px 30px;
+    border: 5px solid var(--primary-color-dark);
+    border-radius: 20px;
+    background: rgba(22, 27, 34, 0.85);
+    box-shadow: 0 0 40px rgba(138, 43, 226, 0.7);
+    border-image: linear-gradient(45deg, var(--primary-color-light), var(--primary-color-dark)) 1;
+    border-width: 5px;
+    text-align: center;
+    display: none; /* مخفي افتراضياً */
+}
+
+#certificate h1 {
+    font-size: 2.5em;
+    color: var(--primary-color-light);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+#certificate p {
+    font-size: 1.1em;
+    color: var(--light-text);
+    margin: 15px 0;
+}
+
+#certName {
+    font-size: 3em;
+    color: #fff;
+    font-weight: 700;
+    margin: 20px 0;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* ====================================
+   5. Responsive Adjustments
+   ==================================== */
+@media (max-width: 600px) {
+    #siteTitle { font-size: 1.8em; }
+    .rating label { font-size: 40px; }
+    #nameInput { width: 95%; }
+    #certificate { padding: 30px 15px; }
+    #certificate h1 { font-size: 2em; }
+    #certName { font-size: 2.5em; }
+}
+
+/* ====================================
+   6. Print Mode (التعليمات لإبقاء الألوان)
+   ==================================== */
+@media print {
+    /* **التعليمات الأساسية للطباعة الملونة** */
+    body, #certificate {
+        -webkit-print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
+    body {
+        background: var(--dark-bg) !important;
+        color: var(--text-color) !important;
+        padding: 0 !important;
+        /* لا يتم استخدام الـ radial-gradient في الطباعة عادةً، نعتمد على لون الخلفية الداكن */
+    }
+    
+    /* إخفاء عناصر التحكم */
+    .back-link, #siteTitle, h3, .rating, #nameInput, #printBtn { 
+        visibility: hidden; 
+        display: none; 
+    }
+
+    /* ضمان ظهور الشهادة بالخلفية الداكنة */
+    #certificate {
+        background: rgba(22, 27, 34, 0.95) !important;
+        color: var(--text-color) !important;
+        border-color: var(--primary-color-dark) !important;
+        box-shadow: none !important;
+        border-image: linear-gradient(45deg, var(--primary-color-light), var(--primary-color-dark)) 1;
+        border-width: 5px;
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 50px;
+        min-height: 100vh;
+        border-radius: 0;
+    }
+
+    #certificate h1 {
+        color: var(--primary-color-light) !important;
+    }
+    #certName {
+        color: #fff !important;
+        text-shadow: none !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="content-wrapper">
+
+    <a href="index.html" class="back-link">⬅ Back to Home</a>
+
+    <div id="siteTitle">Cyber Run</div>
+
+    <h3>Rate Your Experience</h3>
+
+    <div class="rating">
+      <input type="radio" name="rate" id="r5"><label for="r5">★</label>
+      <input type="radio" name="rate" id="r4"><label for="r4">★</label>
+      <input type="radio" name="rate" id="r3"><label for="r3">★</label>
+      <input type="radio" name="rate" id="r2"><label for="r2">★</label>
+      <input type="radio" name="rate" id="r1"><label for="r1">★</label>
+    </div>
+
+    <input id="nameInput" type="text" placeholder="Enter your name" style="display: none;">
+
+    <button id="printBtn" class="btn-primary" onclick="printCertificate()" style="display: none;">Generate & Print Certificate</button>
+
+    <div id="certificate" style="display: none;">
+      <h1>Certificate of Completion</h1>
+      <p>Cyber Run proudly presents this certificate to</p>
+      <h2 id="certName"></h2>
+      <p>For successfully taking part in the **Cyber Run Experience** and demonstrating commitment to digital security principles.</p>
+    </div>
+
+</div>
+
+<script>
+document.querySelectorAll("input[name='rate']").forEach(el => {
+    el.addEventListener("change", () => {
+        // إظهار عناصر الإدخال والزر والشهادة بعد تقييم المستخدم
+        document.getElementById("nameInput").style.display = "inline-block";
+        document.getElementById("printBtn").style.display = "inline-block";
+        document.getElementById("certificate").style.display = "block";
+    });
+});
+
+function printCertificate() {
+    const nameInput = document.getElementById("nameInput");
+    let name = nameInput.value.trim();
+    
+    // التحقق من إدخال اسم
+    if (!name) {
+        nameInput.placeholder = "Please enter your name!"; // رسالة تنبيه
+        nameInput.focus();
+        return; 
+    }
+
+    // إظهار الاسم في الشهادة
+    document.getElementById("certName").innerText = name;
+    
+    // بدء الطباعة
+    window.print();
+}
+</script>
+
+</body>
+</html>

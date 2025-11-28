@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberRun - Learn Cybersecurity Academy</title>
+    <!-- Tailwind CSS CDN for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <!-- Google Fonts (retained) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+    <style>
+        /* Custom Tailwind Configuration & Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #12121e; /* Deep Dark Background */
+            color: #E0E0F0;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        /* Gradient Orbs for a Sci-Fi effect (Visual Polish) */
+        .orb {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.4;
+            z-index: -1;
+            animation: orbMove 15s infinite alternate;
+        }
+        .orb-1 {
+            background: #5A189A; /* Purple glow */
+            top: -50px;
+            left: -50px;
+        }
+        .orb-2 {
+            background: #FF6B6B; /* Red/Pink glow */
+            bottom: -50px;
+            right: -50px;
+            animation-delay: -7.5s;
+        }
+        @keyframes orbMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(100px, 100px); }
+        }
+        /* Style for the collapsible Attack Cards */
+        .attack-card-main {
+            box-shadow: 0 0 30px rgba(255, 100, 100, 0.2);
+            transition: transform 0.3s ease-in-out;
+        }
+        .attack-card-main:hover {
+            transform: translateY(-4px);
+        }
+        /* Custom font for logo */
+        .logo {
+            font-family: 'Press Start 2P', system-ui;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px #8a2be2;
+            letter-spacing: 2px;
+        }
+        /* Card transition fix for smooth collapse */
+        .collapsible-content {
+            /* FIX: Ensure overflow is hidden when collapsed */
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+            max-height: 0; 
+            overflow: hidden; /* Prevents scrollbar from appearing when max-height is 0 */
+            padding-top: 0;
+            padding-bottom: 0;
+            padding-left: 1.5rem; 
+            padding-right: 1.5rem;
+        }
+        .collapsible-content.expanded {
+            max-height: 5000px; /* Sufficiently large height for expansion */
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+        
+        /* === SPECIFIC OVERFLOW RULE FOR ATTACK CARDS (Section 2) === */
+        /* This enables scrolling ONLY for attack content, not scenario content */
+        .attacks-grid .collapsible-content.expanded {
+            overflow-y: auto; 
+            max-height: 5000px;
+        }
+        
+        /* === SCENARIO CARDS (Section 3) - NO SCROLLING (Default) === */
+        /* The default .collapsible-content styling with overflow: hidden applies here, meeting the request to remove scrolling in scenarios. */
+
+        /* Styles for the introductory hidden info */
+        .intro-card:hover {
+            border-color: #5A189A;
+            box-shadow: 0 0 15px #5A189A;
+        }
+        /* Specific styling for the scenario grid cards */
+        .scenario-item-main {
+            transition: transform 0.3s ease-in-out;
+        }
+        .scenario-item-main:hover {
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+<body class="selection:bg-pink-600 selection:text-white">
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <header class="bg-gray-900/50 backdrop-blur-sm shadow-xl sticky top-0 z-50 py-4">
+        <div class="container flex justify-between items-center">
+            <div class="logo">CYBERRUN</div>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-6 text-lg">
+                    <li><a href="#" class="hover:text-pink-400 transition">Home</a></li>
+                    <li><a href="#" class="text-pink-500 font-semibold hover:text-pink-400 transition">Academy</a></li>
+                    <li><a href="#" class="hover:text-pink-400 transition">Games</a></li>
+                    <li><a href="#" class="hover:text-pink-400 transition">Tools</a></li>
+                </ul>
+            </nav>
+          <button class="login-button"><i class="fa-solid fa-user"></i></button>
+        </div>
+    </header>
+
+    <main class="py-12">
+        <div class="container">
+            
+            <!-- HERO SECTION -->
+            <section class="hero-section mb-20 p-8 bg-gray-800/30 rounded-2xl border border-gray-700/50">
+                <div class="hero-content text-left">
+                    <h1 class="text-3xl md:text-5xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-red-500">
+                       Learn Cybersecurity Academy
+                    </h1>
+                    <p class="text-base md:text-lg text-gray-300 mb-8">
+                      Master the fundamental concepts and security protocols required for all advanced, game-based simulations. 
+                    </p>
+                    <a href="#introduction" class="btn btn-primary inline-flex items-center px-8 py-3 bg-pink-600 text-white font-bold rounded-lg text-xl hover:bg-pink-700 transition duration-300 shadow-xl shadow-pink-600/50 transform hover:scale-105">
+                        <i class="fa-solid fa-graduation-cap mr-3"></i> Get Started
+                    </a>
+                </div>
+            </section>
+
+            <!-- 1. INTRODUCTION TO CYBERSECURITY -->
+            <section id="introduction" class="content-section mb-16">
+                <h2 class="section-title text-4xl font-bold mb-6 border-b border-gray-700 pb-2 text-pink-400">Introduction to Cybersecurity</h2>
+                <div id="introCard" class="intro-card info-card p-6 bg-gray-800 rounded-xl border-2 border-gray-700 transition duration-300 relative cursor-pointer">
+                    <div class="absolute top-4 left-4 text-3xl text-pink-500 z-10"></div>
+                    <p class="text-lg ml-10">Access the core knowledge base and theoretical frameworks essential for practical application in the CyberRun environment. Click to reveal the definition!</p>
+                    
+                    <div id="hiddenInfo" class="hidden-info mt-4 p-4 bg-gray-700 rounded-lg border-l-4 border-pink-500">
+                        <strong class="text-pink-300">What is Cybersecurity?</strong> It is the practice of defending systems, networks, and programs from digital attacks. These cyberattacks are usually aimed at accessing, changing, or destroying sensitive information.
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. TYPES OF CYBER ATTACKS (Grid with Interactive Cards) -->
+            <section class="content-section mb-16">
+                <h2 class="section-title text-4xl font-bold mb-8 border-b border-gray-700 pb-2 text-pink-400">Types of Cyber Attacks</h2>
+                <div class="attacks-grid grid grid-cols-1 gap-6">
+
+                    <!-- *** 1. INTERACTIVE PHISHING CARD *** -->
+                    <div id="phishingCard" class="attack-card-main bg-gray-900 rounded-xl overflow-hidden">
+                        <div id="phishingHeader" class="p-4 md:p-6 cursor-pointer flex justify-between items-center bg-red-800/80 hover:bg-red-700 transition duration-300 border-b border-red-900">
+                            <div class="flex items-center space-x-4">
+                                <div class="p-3 bg-red-600 rounded-full text-white shadow-lg shadow-red-500/50">
+                                    <i class="fa-solid fa-triangle-exclamation w-6 h-6"></i>
+                                </div>
+                                <h4 class="text-2xl font-bold text-white">Phishing </h4>
+                            </div>
+                            <div id="phishingChevron" class="text-white transition-transform duration-300">
+                                <i class="fa-solid fa-chevron-down w-6 h-6"></i>
+                            </div>
+                        </div>
+
+                        <div id="phishingContent" class="collapsible-content">
+                            <!-- Main Warning/Statistic Section -->
+                            <div class="mb-6 bg-red-900/50 p-4 rounded-lg border-l-4 border-red-500">
+                                <p class="text-lg font-semibold text-red-300 flex items-center">
+                                    <i class="fa-solid fa-shield-halved w-6 h-6 mr-3"></i>
+                                    PRIMARY THREAT VECTOR: 91% of Attacks Start with Email!
+                                </p>
+                                <p class="text-gray-300 mt-2 text-sm">
+                                    Phishing remains the most prevalent cyber threat. It only takes one click on a malicious link to compromise an entire network.
+                                </p>
+                            </div>
+                            <!-- Visual Content Placeholder (UPDATED TEXT) -->
+                            <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6 mb-6 p-4 bg-gray-700 rounded-xl">
+                                <div class="flex-shrink-0 w-full md:w-1/3 h-32 rounded-lg overflow-hidden border-2 border-red-500">
+                                    <img src="https://www.phinsecurity.com/hs-fs/hubfs/01-How-to-Identify-a-Phishing-Email.jpg?width=1800&height=900&name=01-How-to-Identify-a-Phishing-Email.jpg" 
+                                            alt="Phishing visual example" 
+                                            class="w-full h-full object-cover">
+                                </div>
+                                <div class="md:w-2/3">
+                                    <h5 class="text-xl font-bold text-pink-400 mb-2">How Does Phishing Work?</h5>
+                                    <p class="text-gray-300">
+                                        Attackers impersonate trusted entities (like banks, executives, or IT support) to trick victims into revealing sensitive data, such as login credentials or credit card numbers. 
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Types of Phishing (Structured Content) -->
+                            <h5 class="text-xl font-bold text-pink-500 mb-3 border-b border-gray-700 pb-1">Common Phishing Methods</h5>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-envelope-circle-check w-5 h-5 text-green-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Spear Phishing:</p>
+                                    <p class="text-sm text-gray-400">Highly personalized attack targeting specific individuals.</p></div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-sack-dollar w-5 h-5 text-yellow-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Whaling:</p>
+                                    <p class="text-sm text-gray-400">Targets high-profile executives (CEOs, CFOs).</p></div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-phone-volume w-5 h-5 text-blue-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Vishing:</p>
+                                    <p class="text-sm text-gray-400">Phishing conducted via voice calls (VOIP/phone).</p></div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-comment-dots w-5 h-5 text-indigo-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Smishing:</p>
+                                    <p class="text-sm text-gray-400">Phishing conducted through SMS text messages.</p></div>
+                                </div>
+                            </div>
+                            <div class="mt-6 text-center">
+                                <a href="https://www.simpson-associates.co.uk/emails-the-most-common-way-of-starting-a-phishing-attack/" target="_blank" class="inline-flex items-center px-4 py-2 bg-pink-600 text-white font-medium rounded-full hover:bg-pink-700 transition duration-300">
+                                    <i class="fa-solid fa-arrow-up-right-from-square w-4 h-4 mr-2"></i>
+                                    Read the Full Article
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- *** 2. INTERACTIVE MALWARE CARD *** -->
+                    <div id="malwareCard" class="attack-card-main bg-gray-900 rounded-xl overflow-hidden">
+                        <div id="malwareHeader" class="p-4 md:p-6 cursor-pointer flex justify-between items-center bg-blue-800/80 hover:bg-blue-700 transition duration-300 border-b border-blue-900">
+                            <div class="flex items-center space-x-4">
+                                <div class="p-3 bg-blue-600 rounded-full text-white shadow-lg shadow-blue-500/50">
+                                    <i class="fa-solid fa-bug w-6 h-6"></i>
+                                </div>
+                                <h4 class="text-2xl font-bold text-white">Malware </h4>
+                            </div>
+                            <div id="malwareChevron" class="text-white transition-transform duration-300">
+                                <i class="fa-solid fa-chevron-down w-6 h-6"></i>
+                            </div>
+                        </div>
+
+                        <div id="malwareContent" class="collapsible-content">
+                            <!-- Main Warning/Statistic Section -->
+                            <div class="mb-6 bg-blue-900/50 p-4 rounded-lg border-l-4 border-blue-500">
+                                <p class="text-lg font-semibold text-blue-300 flex items-center">
+                                    <i class="fa-solid fa-robot w-6 h-6 mr-3"></i>
+                                    DEFINITION: Any software designed to cause damage or gain unauthorized access.
+                                </p>
+                                <p class="text-gray-300 mt-2 text-sm">
+                                    Malware is often hidden inside legitimate files, attachments, or exploited vulnerabilities. Its primary goal is data theft, system disruption, or financial extortion.
+                                </p>
+                            </div>
+                            <!-- Visual Content Placeholder (UPDATED TEXT) -->
+                            <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6 mb-6 p-4 bg-gray-700 rounded-xl">
+                                <div class="flex-shrink-0 w-full md:w-1/3 h-32 rounded-lg overflow-hidden border-2 border-blue-500">
+                                    <img src="https://sm.pcmag.com/t/pcmag_me/help/7/7-signs-yo/7-signs-you-have-malware-and-how-to-get-rid-of-it_eg6r.1920.jpg" 
+                                            alt="Malware visual example" 
+                                            class="w-full h-full object-cover">
+                                </div>
+                                <div class="md:w-2/3">
+                                    <h5 class="text-xl font-bold text-pink-400 mb-2">Infection Vectors</h5>
+                                    <p class="text-gray-300">
+                                        The most common methods for spreading malware include malicious email attachments, compromised websites (drive-by downloads), and infected USB drives. 
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Types of Malware (Structured Content) -->
+                            <h5 class="text-xl font-bold text-pink-500 mb-3 border-b border-gray-700 pb-1">Major Types of Malware</h5>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-virus w-5 h-5 text-red-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Virus:</p>
+                                    <p class="text-sm text-gray-400">Needs a host file to replicate.</p></div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-worm w-5 h-5 text-green-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Worm:</p>
+                                    <p class="text-sm text-gray-400">Spreads independently across networks.</p></div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-horse-head w-5 h-5 text-yellow-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Trojan Horse:</p>
+                                    <p class="text-sm text-gray-400">Disguised as legitimate software.</p></div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-lock w-5 h-5 text-pink-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Ransomware:</p>
+                                    <p class="text-sm text-gray-400">Encrypts files, demands ransom.</p></div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-eye w-5 h-5 text-indigo-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Spyware:</p>
+                                    <p class="text-sm text-gray-400">Monitors user activity secretly.</p></div>
+                                </div>
+                            </div>
+                            <div class="mt-6 text-center">
+                                <a href="https://www.malwarebytes.com/malware" target="_blank" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-full hover:bg-blue-700 transition duration-300">
+                                    <i class="fa-solid fa-book-open w-4 h-4 mr-2"></i>
+                                    Explore Mitigation Tactics
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- *** 3. INTERACTIVE DDOS ATTACKS CARD *** -->
+                    <div id="ddosCard" class="attack-card-main bg-gray-900 rounded-xl overflow-hidden">
+                        <div id="ddosHeader" class="p-4 md:p-6 cursor-pointer flex justify-between items-center bg-indigo-800/80 hover:bg-indigo-700 transition duration-300 border-b border-indigo-900">
+                            <div class="flex items-center space-x-4">
+                                <div class="p-3 bg-indigo-600 rounded-full text-white shadow-lg shadow-indigo-500/50">
+                                    <i class="fa-solid fa-fire-extinguisher w-6 h-6"></i>
+                                </div>
+                                <h4 class="text-2xl font-bold text-white">DDOS Attacks </h4>
+                            </div>
+                            <div id="ddosChevron" class="text-white transition-transform duration-300">
+                                <i class="fa-solid fa-chevron-down w-6 h-6"></i>
+                            </div>
+                        </div>
+
+                        <div id="ddosContent" class="collapsible-content">
+                            <!-- Main Warning/Statistic Section -->
+                            <div class="mb-6 bg-indigo-900/50 p-4 rounded-lg border-l-4 border-indigo-500">
+                                <p class="text-lg font-semibold text-indigo-300 flex items-center">
+                                    <i class="fa-solid fa-plug-circle-xmark w-6 h-6 mr-3"></i>
+                                    GOAL: Make an online service unavailable by overwhelming it with traffic.
+                                </p>
+                                <p class="text-gray-300 mt-2 text-sm">
+                                    Distributed Denial of Service (DDoS) uses multiple compromised computer systems (Botnets) to flood a target, forcing it to slow down or crash entirely.
+                                </p>
+                            </div>
+                            <!-- Visual Content Placeholder (UPDATED TEXT) -->
+                            <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6 mb-6 p-4 bg-gray-700 rounded-xl">
+                                <div class="flex-shrink-0 w-full md:w-1/3 h-32 rounded-lg overflow-hidden border-2 border-indigo-500">
+                                    <img src="https://www.keycdn.com/img/support/ddos-attack-lg@2x.webp" 
+                                            alt="DDoS visual example" 
+                                            class="w-full h-full object-cover">
+                                </div>
+                                <div class="md:w-2/3">
+                                    <h5 class="text-xl font-bold text-pink-400 mb-2">The Impact</h5>
+                                    <p class="text-gray-300">
+                                        DDoS attacks cause massive financial losses due to downtime, damage customer trust, and can be used as a distraction for more sophisticated breaches. 
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Types of DDOS (Structured Content) -->
+                            <h5 class="text-xl font-bold text-pink-500 mb-3 border-b border-gray-700 pb-1">Categorizing DDoS Attacks</h5>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-cloud-arrow-up w-5 h-5 text-red-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Volumetric:</p>
+                                    <p class="text-sm text-gray-400">Consumes all available bandwidth.</p></div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-network-wired w-5 h-5 text-green-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Protocol:</p>
+                                    <p class="text-sm text-gray-400">Exploits server resources (e.g., SYN Flood).</p></div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-list-check w-5 h-5 text-yellow-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Application Layer:</p>
+                                    <p class="text-sm text-gray-400">Targets specific application functions (Layer 7).</p></div>
+                                </div>
+                            </div>
+                            <div class="mt-6 text-center">
+                                <a href="https://www.fortinet.com/resources/cyberglossary/ddos-attack" target="_blank" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white font-medium rounded-full hover:bg-indigo-700 transition duration-300">
+                                    <i class="fa-solid fa-filter w-4 h-4 mr-2"></i>
+                                    Learn Traffic Filtering
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- *** 4. INTERACTIVE SOCIAL ENGINEERING CARD *** -->
+                    <div id="socialEngCard" class="attack-card-main bg-gray-900 rounded-xl overflow-hidden">
+                        <div id="socialEngHeader" class="p-4 md:p-6 cursor-pointer flex justify-between items-center bg-yellow-800/80 hover:bg-yellow-700 transition duration-300 border-b border-yellow-900">
+                            <div class="flex items-center space-x-4">
+                                <div class="p-3 bg-yellow-600 rounded-full text-white shadow-lg shadow-yellow-500/50">
+                                    <i class="fa-solid fa-user-secret w-6 h-6"></i>
+                                </div>
+                                <h4 class="text-2xl font-bold text-white">Social Engineering </h4>
+                            </div>
+                            <div id="socialEngChevron" class="text-white transition-transform duration-300">
+                                <i class="fa-solid fa-chevron-down w-6 h-6"></i>
+                            </div>
+                        </div>
+
+                        <div id="socialEngContent" class="collapsible-content">
+                            <!-- Main Warning/Statistic Section -->
+                            <div class="mb-6 bg-yellow-900/50 p-4 rounded-lg border-l-4 border-yellow-500">
+                                <p class="text-lg font-semibold text-yellow-300 flex items-center">
+                                    <i class="fa-solid fa-handshake w-6 h-6 mr-3"></i>
+                                    FOCUS: Exploiting human psychology and trust, not system vulnerabilities.
+                                </p>
+                                <p class="text-gray-300 mt-2 text-sm">
+                                    This is the art of manipulating people into performing actions or divulging confidential information, often bypassing technical defenses entirely.
+                                </p>
+                            </div>
+                            <!-- Visual Content Placeholder (UPDATED TEXT) -->
+                            <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6 mb-6 p-4 bg-gray-700 rounded-xl">
+                                <div class="flex-shrink-0 w-full md:w-1/3 h-32 rounded-lg overflow-hidden border-2 border-yellow-500">
+                                    <img src="https://www.telsy.com/wp-content/uploads/2021/10/social-engineering-telsy-768x432.jpg" 
+                                            alt="Social Engineering visual example" 
+                                            class="w-full h-full object-cover">
+                                </div>
+                                <div class="md:w-2/3">
+                                    <h5 class="text-xl font-bold text-pink-400 mb-2">The Tactics</h5>
+                                    <p class="text-gray-300">
+                                        Attackers use urgency, authority (impersonating a CEO or IT admin), or curiosity to compel a victim to act quickly before thinking critically. 
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Types of SE (Structured Content) -->
+                            <h5 class="text-xl font-bold text-pink-500 mb-3 border-b border-gray-700 pb-1">Common Social Engineering Techniques</h5>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-person-military-pointing w-5 h-5 text-red-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Pretexting:</p>
+                                    <p class="text-sm text-gray-400">Creating a false scenario (pretext) to obtain information.</p></div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-person-walking-luggage w-5 h-5 text-green-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Tailgating:</p>
+                                    <p class="text-sm text-gray-400">Gaining physical access by following authorized personnel.</p></div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-file-excel w-5 h-5 text-blue-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Baiting:</p>
+                                    <p class="text-sm text-gray-400">Offering a reward (like a free movie download or infected USB drive).</p></div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-user-tag w-5 h-5 text-indigo-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Impersonation:</p>
+                                    <p class="text-sm text-gray-400">Pretending to be a trusted figure over the phone or email.</p></div>
+                                </div>
+                            </div>
+                            <div class="mt-6 text-center">
+                                <a href="https://www.cisco.com/site/us/en/learn/topics/security/what-is-social-engineering.html" target="_blank" class="inline-flex items-center px-4 py-2 bg-yellow-600 text-white font-medium rounded-full hover:bg-yellow-700 transition duration-300">
+                                    <i class="fa-solid fa-person-chalkboard w-4 h-4 mr-2"></i>
+                                    Train Your Team
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- *** 5. INTERACTIVE ZERO-DAY EXPLOITS CARD *** -->
+                    <div id="zeroDayCard" class="attack-card-main bg-gray-900 rounded-xl overflow-hidden">
+                        <div id="zeroDayHeader" class="p-4 md:p-6 cursor-pointer flex justify-between items-center bg-gray-700/80 hover:bg-gray-700 transition duration-300 border-b border-gray-800">
+                            <div class="flex items-center space-x-4">
+                                <div class="p-3 bg-gray-600 rounded-full text-white shadow-lg shadow-gray-500/50">
+                                    <i class="fa-solid fa-lock-open w-6 h-6"></i>
+                                </div>
+                                <h4 class="text-2xl font-bold text-white">Zero-Day Exploits </h4>
+                            </div>
+                            <div id="zeroDayChevron" class="text-white transition-transform duration-300">
+                                <i class="fa-solid fa-chevron-down w-6 h-6"></i>
+                            </div>
+                        </div>
+
+                        <div id="zeroDayContent" class="collapsible-content">
+                            <!-- Main Warning/Statistic Section -->
+                            <div class="mb-6 bg-gray-800/50 p-4 rounded-lg border-l-4 border-gray-500">
+                                <p class="text-lg font-semibold text-gray-300 flex items-center">
+                                    <i class="fa-solid fa-mask w-6 h-6 mr-3"></i>
+                                    DEFINITION: An attack that exploits a software vulnerability before the vendor knows about it.
+                                </p>
+                                <p class="text-gray-300 mt-2 text-sm">
+                                    "Zero-Day" refers to the fact that the vendor has "zero days" to fix the flaw because it is already being actively exploited in the wild.
+                                </p>
+                            </div>
+                            <!-- Visual Content Placeholder (UPDATED TEXT) -->
+                            <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6 mb-6 p-4 bg-gray-700 rounded-xl">
+                                <div class="flex-shrink-0 w-full md:w-1/3 h-32 rounded-lg overflow-hidden border-2 border-gray-500">
+                                    <img src="https://www.sdsolutionsllc.com/wp-content/uploads/2021/03/Zero-Day_Attack.png" 
+                                            alt="Zero-Day visual example" 
+                                            class="w-full h-full object-cover">
+                                </div>
+                                <div class="md:w-2/3">
+                                    <h5 class="text-xl font-bold text-pink-400 mb-2">Defense Challenge</h5>
+                                    <p class="text-gray-300">
+                                        Since there is no patch available, traditional signature-based security tools cannot detect or prevent these attacks, making them extremely valuable to sophisticated threat actors. 
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Prevention Steps (Structured Content) -->
+                            <h5 class="text-xl font-bold text-pink-500 mb-3 border-b border-gray-700 pb-1">Mitigation and Prevention</h5>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-fingerprint w-5 h-5 text-red-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Behavioral Detection:</p>
+                                    <p class="text-sm text-gray-400">Monitoring system activity for unusual patterns.</p></div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-server w-5 h-5 text-green-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Segmentation:</p>
+                                    <p class="text-sm text-gray-400">Limiting lateral movement across the network.</p></div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-user-lock w-5 h-5 text-blue-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Least Privilege:</p>
+                                    <p class="text-sm text-gray-400">Granting minimal user access rights.</p></div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-gray-800 p-3 rounded-lg">
+                                    <i class="fa-solid fa-microchip w-5 h-5 text-indigo-400 flex-shrink-0 mt-1"></i>
+                                    <div><p class="font-semibold text-gray-200">Virtual Patching:</p>
+                                    <p class="text-sm text-gray-400">Implementing security controls before official patches.</p></div>
+                                </div>
+                            </div>
+                            <div class="mt-6 text-center">
+                                <a href="https://www.imperva.com/learn/application-security/zero-day-exploit/" target="_blank" class="inline-flex items-center px-4 py-2 bg-gray-600 text-white font-medium rounded-full hover:bg-gray-700 transition duration-300">
+                                    <i class="fa-solid fa-magnifying-glass w-4 h-4 mr-2"></i>
+                                    Explore Advanced Detection
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </section>
+
+            <!-- 3. INTERACTIVE SCENARIO: WHAT IF? (NOW COLLAPSIBLE with GEMINI API) -->
+            <section class="content-section mb-16">
+                <div class="flex items-center mb-6 border-b border-gray-700 pb-2">
+                    <i class="fa-solid fa-brain text-4xl text-pink-500 mr-4"></i>
+                    <div>
+                        <h2 class="section-title text-4xl font-bold text-white">War Room: Incident Response</h2>
+                        <p class="text-gray-400 text-sm md:text-base mt-1">Select a scenario and generate an AI-powered expert response plan.</p>
+                    </div>
+                </div>
+
+                <div class="scenario-grid grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <div class="scenario-card bg-gray-800/50 rounded-2xl p-6 border border-gray-700 hover:border-yellow-500/50 transition duration-300 flex flex-col h-full relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-20 h-20 bg-yellow-500/10 blur-2xl rounded-full -mr-10 -mt-10 pointer-events-none"></div>
+
+                        <div class="mb-6">
+                            <div class="w-12 h-12 bg-yellow-900/30 rounded-lg flex items-center justify-center text-yellow-500 mb-4 border border-yellow-500/20">
+                                <i class="fa-solid fa-envelope text-xl"></i>
+                            </div>
+                            <h4 class="text-2xl font-bold text-white mb-4">Phishing Response</h4>
+                            
+                            <div class="text-gray-400 text-sm space-y-4" id="scenario1Challenge">
+                                <div>
+                                    <strong class="text-gray-200 block mb-1">Situation:</strong>
+                                    An employee reports clicking a link in a "Password Expiry" email and downloading a file named invoice.exe.
+                                </div>
+                                <div>
+                                    <strong class="text-gray-200 block mb-1">Mission:</strong>
+                                    Define the immediate containment and eradication steps.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-auto">
+                            <div id="scenario1Response" class="ai-response mb-4 p-3 bg-gray-900 rounded-lg text-xs hidden border border-yellow-500/30 text-gray-300"></div>
+
+                            <button onclick="generateOutline('scenario1')" id="geminiBtn1" class="w-full bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-lg shadow-yellow-600/20 flex items-center justify-center">
+                                <i class="fa-solid fa-robot mr-2"></i> Generate Response Plan
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="scenario-card bg-gray-800/50 rounded-2xl p-6 border border-gray-700 hover:border-red-500/50 transition duration-300 flex flex-col h-full relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-20 h-20 bg-red-500/10 blur-2xl rounded-full -mr-10 -mt-10 pointer-events-none"></div>
+
+                        <div class="mb-6">
+                            <div class="w-12 h-12 bg-red-900/30 rounded-lg flex items-center justify-center text-red-500 mb-4 border border-red-500/20">
+                    <i class="fa-solid fa-cloud-arrow-down text-xl"></i>
+                            </div>
+                            <h4 class="text-2xl font-bold text-white mb-4">Cloud Data Leak</h4>
+                            
+                            <div class="text-gray-400 text-sm space-y-4" id="scenario2Challenge">
+                                <div>
+                                    <strong class="text-gray-200 block mb-1">Situation:</strong>
+                                    Security tools alert that an AWS S3 bucket containing customer PII was left public for 48 hours.
+                                </div>
+                                <div>
+                                    <strong class="text-gray-200 block mb-1">Mission:</strong>
+                                    Outline the forensic analysis and legal notification phases.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-auto">
+                             <div id="scenario2Response" class="ai-response mb-4 p-3 bg-gray-900 rounded-lg text-xs hidden border border-red-500/30 text-gray-300"></div>
+
+                            <button onclick="generateOutline('scenario2')" id="geminiBtn2" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-lg shadow-red-600/20 flex items-center justify-center">
+                                <i class="fa-solid fa-robot mr-2"></i> Generate Response Plan
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="scenario-card bg-gray-800/50 rounded-2xl p-6 border border-gray-700 hover:border-blue-500/50 transition duration-300 flex flex-col h-full relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-20 h-20 bg-blue-500/10 blur-2xl rounded-full -mr-10 -mt-10 pointer-events-none"></div>
+
+                        <div class="mb-6">
+                            <div class="w-12 h-12 bg-blue-900/30 rounded-lg flex items-center justify-center text-blue-500 mb-4 border border-blue-500/20">
+                                <i class="fa-solid fa-ellipsis text-xl"></i>
+                            </div>
+                            <h4 class="text-2xl font-bold text-white mb-4">Auth Hardening</h4>
+                            
+                            <div class="text-gray-400 text-sm space-y-4" id="scenario3Challenge">
+                                <div>
+                                    <strong class="text-gray-200 block mb-1">Situation:</strong>
+                                    Executives are using weak passwords. You need to propose a new, strict policy.
+                                </div>
+                                <div>
+                                    <strong class="text-gray-200 block mb-1">Mission:</strong>
+                                    Compare MFA types (SMS vs App) and define password complexity rules.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-auto">
+                             <div id="scenario3Response" class="ai-response mb-4 p-3 bg-gray-900 rounded-lg text-xs hidden border border-blue-500/30 text-gray-300"></div>
+
+                            <button onclick="generateOutline('scenario3')" id="geminiBtn3" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-lg shadow-blue-600/20 flex items-center justify-center">
+                                <i class="fa-solid fa-robot mr-2"></i> Generate Policy Draft
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+            
+            <!-- 4. VIDEO SECTION -->
+            <section class="content-section mb-16">
+                <h2 class="section-title text-4xl font-bold mb-6 border-b border-gray-700 pb-2 text-pink-400">Quick Cyber Bytes: 5-Minute Lessons 🎬</h2>
+                <div class="video-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Video Tile 1 -->
+                    <a href="https://youtu.be/qdpReVgpQhc?si=dSG1xTB0icD_6ZmR" class="video-tile block bg-gray-800 p-4 rounded-xl hover:bg-gray-700 transition duration-300 shadow-lg border border-gray-700">
+                        <span class="text-3xl block mb-2 text-pink-500">▶️</span>
+                        <h5 class="text-lg font-semibold text-white">What is Phishing? And How to Protect Yourself</h5>
+                        <p class="text-sm text-gray-400">Cyber Security Education</p>
+                    </a>
+                    
+                    <!-- Video Tile 2 -->
+                   <a href="https://youtu.be/o17IM5Ju7PI?si=2Volvfd_MTblKR16" target="_blank" class="video-tile block bg-gray-800 p-4 rounded-xl hover:bg-gray-700 transition duration-300 shadow-lg border border-gray-700">
+                        <span class="text-3xl block mb-2 text-blue-400"><i class="fa-solid fa-wifi"></i></span>
+                        <h5 class="text-lg font-semibold text-white">What is a VPN and How Does it Protect Your Privacy?</h5>
+                        <p class="text-sm text-gray-400">Online Privacy Explained</p>
+                    </a>
+                    
+                    <!-- Video Tile 3 -->
+                    <a href="https://youtu.be/R2lUbIMxBkw?si=2YRwIwxg1vTVAMKA" target="_blank" class="video-tile block bg-gray-800 p-4 rounded-xl hover:bg-gray-700 transition duration-300 shadow-lg border border-gray-700">
+                        <span class="text-3xl block mb-2 text-indigo-400"><i class="fa-solid fa-cloud"></i></span>
+                        <h5 class="text-lg font-semibold text-white">Cloud Storage Security: Protecting Your Files Safely</h5>
+                        <p class="text-sm text-gray-400">Data Protection Hub</p>
+                    </a>
+                    
+                    <!-- Video Tile 4 (Icon and Text Updated) -->
+                    <a href="https://youtu.be/lCH7rta13wo?si=idMJsDzd8wt76e-1" target="_blank" class="video-tile block bg-gray-800 p-4 rounded-xl hover:bg-gray-700 transition duration-300 shadow-lg border border-gray-700">
+                        <span class="text-3xl block mb-2 text-green-400"><i class="fa-solid fa-shield-halved"></i></span>
+                        <h5 class="text-lg font-semibold text-white">Every Cyber Attack Type Explained in 5 Minutes</h5>
+                        <p class="text-sm text-gray-400">Every attack type, from Phishing to Zero-Day</p>
+                    </a>
+                    
+                </div>
+            </section>
+
+        </div>
+    </main>
+    
+    <footer class="footer bg-gray-900/50 py-6 border-t border-gray-800">
+        <div class="container text-center text-gray-500">
+            &copy; 2025 CyberRun. All rights reserved.
+        </div>
+    </footer>
+
+    
+    <script>
+    // --- DEMO MODE SCRIPT (No API Key Required) ---
+
+    // Pre-written responses to simulate AI behavior
+    const demoResponses = {
+        "scenario1": `
+            <ul>
+                <li><strong>Containment:</strong> Immediately disconnect the affected device from the network (isolate host).</li>
+                <li><strong>Eradication:</strong> Reset the compromised employee credentials and run a full antivirus scan.</li>
+                <li><strong>Investigation:</strong> Analyze the <em>invoice.exe</em> file in a sandbox to determine what data was accessed.</li>
+            </ul>`,
+        "scenario2": `
+            <ul>
+                <li><strong>Forensics:</strong> Review AWS CloudTrail logs to identify which IP addresses accessed the bucket during the 48-hour window.</li>
+                <li><strong>Legal:</strong> Consult with legal counsel to determine if the leaked PII triggers GDPR or CCPA notification requirements.</li>
+                <li><strong>Remediation:</strong> Enable "Block Public Access" on all S3 buckets and rotate any exposed keys.</li>
+            </ul>`,
+        "scenario3": `
+            <ul>
+                <li><strong>MFA Policy:</strong> Mandate App-based Authenticator (e.g., Google Auth) and deprecate SMS due to SIM-swapping risks.</li>
+                <li><strong>Complexity:</strong> Enforce 14+ character passphrases rather than complex short passwords.</li>
+                <li><strong>Rotation:</strong> Remove mandatory rotation requirements (NIST guideline) unless a compromise is suspected.</li>
+            </ul>`
+    };
+
+    async function generateOutline(scenarioId) {
+        const responseElement = document.getElementById(scenarioId + 'Response');
+        // Matches "geminiBtn1" from "scenario1"
+        const button = document.getElementById('geminiBtn' + scenarioId.slice(-1));
+
+        if (!responseElement || !button) {
+            console.error("Missing elements for ID:", scenarioId);
+            return;
+        }
+
+        // UI Loading State
+        button.disabled = true;
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Analyzing Scenario...';
+        
+        // Clear previous response and hide
+        responseElement.innerHTML = '';
+        responseElement.classList.add('hidden');
+
+        // Simulate Network Delay (1.5 seconds)
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        // Display the "Demo" response
+        const mockResponse = demoResponses[scenarioId] || "No response defined for this scenario.";
+        
+        responseElement.innerHTML = `<h5 class="font-bold text-white mb-2 underline decoration-pink-500">AI Response Plan:</h5>${mockResponse}`;
+        responseElement.classList.remove('hidden');
+
+        // Reset Button
+        button.disabled = false;
+        button.innerHTML = originalText;
+    }
+    
+    // Collapsible Logic for Section 2
+    function setupCollapsibleCard(headerId, contentId, chevronId) {
+        const header = document.getElementById(headerId);
+        const content = document.getElementById(contentId);
+        const chevron = document.getElementById(chevronId);
+        
+        if (!header || !content || !chevron) return; 
+
+        content.style.maxHeight = '0';
+
+        header.addEventListener('click', () => {
+            const isExpanded = content.classList.toggle('expanded');
+            if (isExpanded) {
+                content.style.maxHeight = content.scrollHeight + 'px'; 
+                chevron.style.transform = 'rotate(180deg)';
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px'; 
+                setTimeout(() => { content.style.maxHeight = '0'; }, 10);
+                chevron.style.transform = 'rotate(0deg)';
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Introduction Card
+        const introCard = document.getElementById('introCard');
+        const hiddenInfo = document.getElementById('hiddenInfo');
+        if(hiddenInfo) hiddenInfo.style.display = 'none';
+        if(introCard) {
+            introCard.addEventListener('click', () => {
+                const isHidden = hiddenInfo.style.display === 'none';
+                hiddenInfo.style.display = isHidden ? 'block' : 'none';
+                introCard.classList.toggle('border-pink-500', isHidden);
+                introCard.classList.toggle('border-gray-700', !isHidden);
+            });
+        }
+
+        // Setup Attack Cards
+        setupCollapsibleCard('phishingHeader', 'phishingContent', 'phishingChevron');
+        setupCollapsibleCard('malwareHeader', 'malwareContent', 'malwareChevron');
+        setupCollapsibleCard('ddosHeader', 'ddosContent', 'ddosChevron');
+        setupCollapsibleCard('socialEngHeader', 'socialEngContent', 'socialEngChevron');
+        setupCollapsibleCard('zeroDayHeader', 'zeroDayContent', 'zeroDayChevron');
+    });
+</script>
+</body>
+</html>

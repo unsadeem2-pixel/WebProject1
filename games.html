@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cyberrun games</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Press+Start+2P&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* General Styling */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #12052c;
+      color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Background Orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.6;
+      z-index: -1;
+    }
+    .orb-1 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, #d43f8d, transparent 60%);
+      top: -100px;
+      left: -100px;
+    }
+    .orb-2 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, #8a2be2, transparent 60%);
+      bottom: -50px;
+      right: -50px;
+    }
+
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 20px;
+      font-family: 'Press Start 2P', system-ui;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+    }
+
+    .quiz-container {
+      width: 100%;
+      max-width: 600px;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    /* Progress */
+    .progress-bar-container {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #d43f8d, #8a2be2);
+      border-radius: 5px;
+      transition: width 0.4s ease-in-out;
+    }
+    .progress-text {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.7);
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    /* Start button */
+    #start-btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 30px;
+      border-radius: 25px;
+      border: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      background: linear-gradient(90deg, #d43f8d, #b43b9d);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(212, 63, 141, 0.7);
+    }
+    #start-btn:hover {
+      box-shadow: 0 0 16px rgba(212, 63, 141, 0.9);
+    }
+
+    /* Question card */
+    .question-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 25px 30px;
+      margin-top: 20px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      display: none;
+      text-align: left;
+    }
+    .question-card.active {
+      display: block;
+    }
+    .question-card h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #fff;
+      font-size: 1.05rem;
+    }
+    .question-card p {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 16px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 12px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+    input[type="text"]::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Checkbox list for phishing question */
+    .checkbox-list {
+      margin-bottom: 8px;
+    }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+    .checkbox-item input[type="checkbox"] {
+      margin-right: 8px;
+      accent-color: #d43f8d;
+    }
+
+    /* Hint & Feedback */
+    .hint-message {
+      display: none;
+      background: rgba(212, 63, 141, 0.85);
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: #fff;
+      margin-top: 10px;
+    }
+    .feedback {
+      display: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-top: 12px;
+      padding: 8px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .feedback.correct {
+      background: rgba(46, 204, 113, 0.2);
+      color: #2ecc71;
+    }
+    .feedback.incorrect {
+      background: rgba(231, 76, 60, 0.2);
+      color: #e74c3c;
+    }
+
+    /* Buttons */
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 18px;
+      gap: 8px;
+    }
+    .btn {
+      flex: 1;
+      padding: 8px 12px;
+      border-radius: 25px;
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    .submit-btn {
+      background: linear-gradient(90deg, #d43f8d, #b43b9d);
+      color: #fff;
+    }
+    .submit-btn:hover {
+      box-shadow: 0 0 12px rgba(212, 63, 141, 0.7);
+    }
+    .hint-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .hint-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .skip-btn {
+      background: rgba(0, 0, 0, 0.25);
+      color: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .skip-btn:hover {
+      background: rgba(0, 0, 0, 0.4);
+    }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Results */
+    #results-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 25px 30px;
+      margin-top: 20px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      display: none;
+      text-align: center;
+    }
+    .score-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    #restart-btn {
+      margin-top: 12px;
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: none;
+      background: linear-gradient(90deg, #d43f8d, #b43b9d);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="quiz-container">
+    <h1>CYBERRUN GAMES</h1>
+
+    <!-- Progress -->
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    <div class="progress-text" id="progress-text">Question 0 of 5</div>
+
+    <!-- Start Button -->
+    <button id="start-btn">Start Game</button>
+
+    <!-- Q1: Crypto (Base64) -->
+    <div class="question-card" id="question-1">
+      <h3>Crypto</h3>
+      <p>
+        The following text is encoded<br />
+        <code>aGksIGNhbiB5b3Ugc29sdmUgaXQ/</code><br /><br />
+        Decode it and type the original message
+      </p>
+      <input type="text" id="q1-answer" placeholder="Type the decoded text here..." />
+
+      <div class="hint-message" id="q1-hint">
+        Hint: two things you need, Base64 and CyberChef tool
+      </div>
+      <p class="feedback" id="q1-feedback"></p>
+
+      <div class="button-group">
+        <button class="btn hint-btn" data-q="1">Hint</button>
+        <button class="btn skip-btn" data-q="1">Skip</button>
+        <button class="btn submit-btn" data-q="1">Submit</button>
+      </div>
+    </div>
+
+    <!-- Q2: Phishing -->
+    <div class="question-card" id="question-2">
+      <h3>Phishing Detection</h3>
+      <p>
+        Below are four URLs.<b> Selecte them
+      </p>
+
+      <div class="checkbox-list">
+        <label class="checkbox-item">
+          <input type="checkbox" name="q2-site" value="apple" />
+          https://support-appleid-login.com
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="q2-site" value="microsoft" />
+          https://www.microsoft.com
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="q2-site" value="paypal" />
+          https://secure-paypal-help.net
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="q2-site" value="google" />
+          https://accounts.google.com
+        </label>
+      </div>
+
+      <div class="hint-message" id="q2-hint">
+        Hint: Real services use their official domains only (like apple.com, paypal.com).
+      </div>
+      <p class="feedback" id="q2-feedback"></p>
+
+      <div class="button-group">
+        <button class="btn hint-btn" data-q="2">Hint</button>
+        <button class="btn skip-btn" data-q="2">Skip</button>
+        <button class="btn submit-btn" data-q="2">Submit</button>
+      </div>
+    </div>
+
+    <!-- Q3: Web – external password challenge -->
+    <div class="question-card" id="question-3">
+      <h3>Challenge 3 – Web Password</h3>
+      <p>
+        There is a separate web challenge page with a fake login-style form.<br />
+        Your goal is to find the <strong>secret password</strong> that makes the page show:<br />
+        <code>✅ Correct password! Access granted.</code><br /><br />
+        Open the external page using the link below, solve it, then type the exact password you found.
+      </p>
+
+      <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 8px;">
+        External challenge link:<br />
+        <!-- Replace the href with your real password-challenge URL -->
+        <a href="https://codepen.io/starcipher777/full/EaKEMqN" target="_blank">
+          Open the Password Challenge
+        </a>
+      </p>
+
+      <input type="text" id="q3-answer" placeholder="Type the secret password here..." />
+
+      <div class="hint-message" id="q3-hint">
+        Hint: The password is stored on the external page (for example inside the JavaScript code).
+      </div>
+      <p class="feedback" id="q3-feedback"></p>
+
+      <div class="button-group">
+        <button class="btn hint-btn" data-q="3">Hint</button>
+        <button class="btn skip-btn" data-q="3">Skip</button>
+        <button class="btn submit-btn" data-q="3">Submit</button>
+      </div>
+    </div>
+
+    <!-- Q4: Stego (Hex to text) -->
+    <div class="question-card" id="question-4">
+      <h3>Challenge 4 – Stego (Hex to Text)</h3>
+      <p>
+        Hidden inside an image description you find this hex value:<br />
+        <code>4869207468657265</code><br /><br />
+        Convert it to ASCII text and type the result.
+      </p>
+
+      <input type="text" id="q4-answer" placeholder="Type the decoded text..." />
+
+      <div class="hint-message" id="q4-hint">
+        Hint: Convert Hex → Text (for example with CyberChef → From Hex).
+      </div>
+      <p class="feedback" id="q4-feedback"></p>
+
+      <div class="button-group">
+        <button class="btn hint-btn" data-q="4">Hint</button>
+        <button class="btn skip-btn" data-q="4">Skip</button>
+        <button class="btn submit-btn" data-q="4">Submit</button>
+      </div>
+    </div>
+
+    <!-- Q5: Forensics – file type -->
+    <div class="question-card" id="question-5">
+      <h3>Challenge 5 – Forensics</h3>
+      <p>
+        You see a file called <code>sound.mp3</code>, but it's very small (2 KB).<br />
+        When you open it, you only see text. The first bytes are:<br />
+        <code>EF BB BF</code><br /><br />
+        What kind of file is it actually? (short answer, e.g. <code>text file</code>)
+      </p>
+
+      <input type="text" id="q5-answer" placeholder="Type the real file type..." />
+
+      <div class="hint-message" id="q5-hint">
+        Hint: EF BB BF is the UTF-8 BOM, usually used for plain text files.
+      </div>
+      <p class="feedback" id="q5-feedback"></p>
+
+      <div class="button-group">
+        <button class="btn hint-btn" data-q="5">Hint</button>
+        <button class="btn skip-btn" data-q="5">Skip</button>
+        <button class="btn submit-btn" data-q="5">Submit</button>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div id="results-card">
+      <p class="score-text" id="score-text"></p>
+      <p id="score-detail"></p>
+      <button id="restart-btn">Play Again</button>
+    </div>
+  </div>
+
+  <script>
+    const totalQuestions = 5;
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = 0;
+
+    const progressBar = document.getElementById("progress-bar");
+    const progressText = document.getElementById("progress-text");
+    const startBtn = document.getElementById("start-btn");
+    const resultsCard = document.getElementById("results-card");
+    const scoreText = document.getElementById("score-text");
+    const scoreDetail = document.getElementById("score-detail");
+    const restartBtn = document.getElementById("restart-btn");
+
+    function updateProgress() {
+      const percentage = (answered / totalQuestions) * 100;
+      progressBar.style.width = percentage + "%";
+      progressText.textContent = `Question ${Math.min(answered + 1, totalQuestions)} of ${totalQuestions}`;
+    }
+
+    function showQuestion(num) {
+      document.querySelectorAll(".question-card").forEach(card => {
+        card.classList.remove("active");
+      });
+      const card = document.getElementById(`question-${num}`);
+      if (card) {
+        card.classList.add("active");
+      }
+    }
+
+    function showResults() {
+      document.querySelectorAll(".question-card").forEach(card => {
+        card.classList.remove("active");
+      });
+      resultsCard.style.display = "block";
+      scoreText.textContent = `You scored ${score} / ${totalQuestions}`;
+      scoreDetail.textContent = "You can close this tab or press Play Again to restart.";
+    }
+
+    startBtn.addEventListener("click", () => {
+      startBtn.style.display = "none";
+      currentQuestion = 1;
+      answered = 0;
+      score = 0;
+      resultsCard.style.display = "none";
+      updateProgress();
+      showQuestion(currentQuestion);
+    });
+
+    restartBtn.addEventListener("click", () => {
+      window.location.reload();
+    });
+
+    // Hint buttons
+    document.querySelectorAll(".hint-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const q = btn.getAttribute("data-q");
+        const hint = document.getElementById(`q${q}-hint`);
+        if (hint) hint.style.display = "block";
+      });
+    });
+
+    // Skip buttons
+    document.querySelectorAll(".skip-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const q = parseInt(btn.getAttribute("data-q"), 10);
+        const feedback = document.getElementById(`q${q}-feedback`);
+        if (feedback) {
+          feedback.textContent = "Skipped.";
+          feedback.classList.remove("correct");
+          feedback.classList.add("incorrect");
+          feedback.style.display = "block";
+        }
+        nextQuestion();
+      });
+    });
+
+    // Submit buttons
+    document.querySelectorAll(".submit-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const q = parseInt(btn.getAttribute("data-q"), 10);
+        handleSubmit(q);
+      });
+    });
+
+    function handleSubmit(q) {
+      let correct = false;
+
+      if (q === 1) {
+        const ans = (document.getElementById("q1-answer").value || "").trim().toLowerCase();
+        const expected = "hi, can you solve it?";
+        correct = ans === expected.toLowerCase();
+      }
+
+      if (q === 2) {
+        const selected = Array.from(
+          document.querySelectorAll('input[name="q2-site"]:checked')
+        ).map((c) => c.value);
+        const expected = ["apple", "paypal"];
+        selected.sort();
+        expected.sort();
+        correct =
+          selected.length === expected.length &&
+          selected.every((v, i) => v === expected[i]);
+      }
+
+      if (q === 3) {
+        const ans = (document.getElementById("q3-answer").value || "")
+          .trim()
+          .toLowerCase();
+        const expected = "cyber123"; // password from the external site
+        correct = ans === expected;
+      }
+
+      if (q === 4) {
+        const ans = (document.getElementById("q4-answer").value || "")
+          .trim()
+          .toLowerCase();
+        const expected = "hi there";
+        correct = ans === expected.toLowerCase();
+      }
+
+      if (q === 5) {
+        const ans = (document.getElementById("q5-answer").value || "")
+          .trim()
+          .toLowerCase();
+        // Accept answers mentioning text / txt
+        correct =
+          ans.includes("text") ||
+          ans.includes("txt");
+      }
+
+      const feedback = document.getElementById(`q${q}-feedback`);
+      if (feedback) {
+        feedback.style.display = "block";
+        if (correct) {
+          feedback.textContent = "Correct!";
+          feedback.classList.remove("incorrect");
+          feedback.classList.add("correct");
+          score++;
+        } else {
+          feedback.textContent = "Not quite, but you can skip or try again.";
+          feedback.classList.remove("correct");
+          feedback.classList.add("incorrect");
+          // Do not advance immediately if incorrect — player can fix or skip
+          return;
+        }
+      }
+
+      nextQuestion();
+    }
+
+    function nextQuestion() {
+      answered++;
+      updateProgress();
+      if (answered >= totalQuestions) {
+        showResults();
+      } else {
+        currentQuestion++;
+        showQuestion(currentQuestion);
+      }
+    }
+  </script>
+</body>
+</html>
